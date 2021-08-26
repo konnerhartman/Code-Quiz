@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kon's Coding Quiz</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header class="intro">
+        <p>Welcome to Kon's Coding Quiz! Test your knowledge and see how quickly you can answer a few questions correctly. Each wrong answer will deduct some time off of the clock, so pay attention to your response! </p>
+    </header>
+
+    <main class="card">
+        <input id="start-btn" class="btn" type="button" value="Start Quiz!">
+        <div id="question-body" class="hide">
+            <div id="clock"><p>Time: 0</p></div>
+            <div id="ask-question"></div>
+            <div id="choices"></div>
+        </div>
+        <input id="score-btn" class="btn" type="button" value="View Scores!">
+        <div id="end" class="hide">
+            <p>Great job! Click "View Scores!" at the top to see how you did!</p>
+        </div>
+        <div id="results"></div>
+    </main>
+    
+
+    <script src="assets/script.js"></script>
+</body>
+</html>

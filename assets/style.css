@@ -1,0 +1,28 @@
+body {
+    background-color: aquamarine;
+    font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.btn {
+    background-color: beige;
+    border-radius: 10px;
+    font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: burlywood;
+    border: 5px solid black;
+    border-radius: 30px;
+}
+
+.hide {
+    display: none;
+}
