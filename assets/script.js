@@ -39,7 +39,6 @@ var clockEl = document.getElementById("clock");
 // Variable for the questions.
 var askQuestionEl = document.getElementById("ask-question");
 // Variable for the multiple answer choices.
-var choicesEl = document.getElementById("choices");
 var btnA = document.getElementById("btn-a");
 var btnB = document.getElementById("btn-b");
 var btnC = document.getElementById("btn-c");
@@ -73,7 +72,6 @@ function startClock() {
 
 var index = 0;
 var currentQuestion = questions[index];
-startBtnEl.addEventListener("click", showQuestion);
 
 function showQuestion() {
     if (index < questions.length) {
@@ -83,19 +81,26 @@ function showQuestion() {
         btnC.textContent = currentQuestion.choices[2];
         btnD.textContent = currentQuestion.choices[3];
     };
+    console.log(currentQuestion);
 };
 
-choices.addEventListener("click", nextQuestion);
+startBtnEl.addEventListener("click", showQuestion);
 
 function nextQuestion() {
     if (index < questions.length) {
         index++;
         showQuestion();
     };
+    console.log(nextQuestion);
 };
 
-scoreBtnEl.addEventListener("click", showResults);
+btnA.addEventListener("click", nextQuestion);
+btnB.addEventListener("click", nextQuestion);
+btnC.addEventListener("click", nextQuestion);
+btnD.addEventListener("click", nextQuestion);
 
 function showResults() {
     resultsEl.classList.remove('hide');
 };
+
+scoreBtnEl.addEventListener("click", showResults);
