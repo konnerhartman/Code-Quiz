@@ -2,9 +2,30 @@
 var questions = [
     {
         ask: "What is the proper name for: '==' ?",
-        choices: ["Strict Equality", "Loose Equality", "Abstract Equality", "Kinda Equality"],
-        answer: "Abstract Equality"
-    }
+        choices: ["A. Strict Equality", "B. Loose Equality", "C. Abstract Equality", "D. Kinda Equality"],
+        answer: "(C) Abstract Equality"
+    },
+    {
+        ask: "What special characters surround an array?",
+        choices: ["A. { }", "B. [ ]", "C. ()", "D. ''"],
+        answer: "B. [ ]"
+    },
+    {
+        ask: "In CSS, what does # represent?",
+        choices: ["A. id", "B. hashtag", "C. class", "D. value"],
+        answer: "A. id"
+    },
+    {
+        ask: "What is a 'bang' operator?",
+        choices: ["A. ||", "B. &&", "C. //", "D. !"],
+        answer: "D. !"
+    },
+    {
+        ask: "What JavaScript command causes a pop-up window on the browser?",
+        choices: ["A. alert", "B. prompt", "C. return", "D. NaN"],
+        answer: "B. prompt"
+    },
+    
 ];
 
 // Variable for the 'start' button.
@@ -19,6 +40,10 @@ var clockEl = document.getElementById("clock");
 var askQuestionEl = document.getElementById("ask-question");
 // Variable for the multiple answer choices.
 var choicesEl = document.getElementById("choices");
+var btnA = document.getElementById("btn-a");
+var btnB = document.getElementById("btn-b");
+var btnC = document.getElementById("btn-c");
+var btnD = document.getElementById("btn-d");
 // Variable for the finishing element.
 var endEl = document.getElementById("end");
 // Variable for the 'results' element.
@@ -39,19 +64,38 @@ function startClock() {
         clockEl.textContent = "Time Remaining: " + timeLeft;
         // When countdown reaches 0, it will stop counting instead of going negative.
         if (timeLeft <= 0) {
-        // || questionCount === questions.length) {
             clearInterval(timeInterval)
             endEl.classList.remove('hide');
-         //   recordScore();
-        }
+            questionBodyEl.classList.add('hide');
+        };
     }, 1000);
 };
 
-startBtnEl.addEventListener("click", showQuestion());
-function showQuestion() {
-    document.querySelector("#ask-question").textContent = questions.ask;
-}
+var index = 0;
+var currentQuestion = questions[index];
+startBtnEl.addEventListener("click", showQuestion);
 
-function renderScores() {
-    scoreBtnEl.addEventListener("click", renderScores());
-}
+function showQuestion() {
+    if (index < questions.length) {
+        askQuestionEl.textContent = currentQuestion.ask;
+        btnA.textContent = currentQuestion.choices[0];
+        btnB.textContent = currentQuestion.choices[1];
+        btnC.textContent = currentQuestion.choices[2];
+        btnD.textContent = currentQuestion.choices[3];
+    };
+};
+
+choices.addEventListener("click", nextQuestion);
+
+function nextQuestion() {
+    if (index < questions.length) {
+        index++;
+        showQuestion();
+    };
+};
+
+scoreBtnEl.addEventListener("click", showResults);
+
+function showResults() {
+    resultsEl.classList.remove('hide');
+};
