@@ -3,7 +3,7 @@ var questions = [
     {
         ask: "What is the proper name for: '==' ?",
         choices: ["A. Strict Equality", "B. Loose Equality", "C. Abstract Equality", "D. Kinda Equality"],
-        answer: "(C) Abstract Equality"
+        answer: "C. Abstract Equality"
     },
     {
         ask: "What special characters surround an array?",
@@ -47,6 +47,7 @@ var btnD = document.getElementById("btn-d");
 var endEl = document.getElementById("end");
 // Variable for the 'results' element.
 var resultsEl = document.getElementById("results");
+var index = 0;
 
 // When clicking on the 'start' button, this will start the clock.
 startBtnEl.addEventListener("click", startClock)
@@ -70,10 +71,8 @@ function startClock() {
     }, 1000);
 };
 
-var index = 0;
-var currentQuestion = questions[index];
-
 function showQuestion() {
+    var currentQuestion = questions[index];
     if (index < questions.length) {
         askQuestionEl.textContent = currentQuestion.ask;
         btnA.textContent = currentQuestion.choices[0];
@@ -81,26 +80,50 @@ function showQuestion() {
         btnC.textContent = currentQuestion.choices[2];
         btnD.textContent = currentQuestion.choices[3];
     };
-    console.log(currentQuestion);
-};
 
+};
 startBtnEl.addEventListener("click", showQuestion);
+
+function showResults() {
+    resultsEl.classList.remove('hide');
+    endEl.classList.add('hide');
+};
+scoreBtnEl.addEventListener("click", showResults);
 
 function nextQuestion() {
     if (index < questions.length) {
         index++;
         showQuestion();
     };
-    console.log(nextQuestion);
+    if (index === questions.length) {
+        timeLeft = 0;
+    }
 };
-
 btnA.addEventListener("click", nextQuestion);
 btnB.addEventListener("click", nextQuestion);
 btnC.addEventListener("click", nextQuestion);
 btnD.addEventListener("click", nextQuestion);
 
-function showResults() {
-    resultsEl.classList.remove('hide');
-};
+function correctAnswer() {
+    if (questions[index].answer === questions[index].choices[""]) {
+        timeLeft -= 10;
+    }
+}
 
-scoreBtnEl.addEventListener("click", showResults);
+function choiceA() {
+    correctAnswer(0);
+};
+function choiceB() {
+    correctAnswer(1);
+};
+function choiceC() {
+    correctAnswer(2);
+};
+function choiceD() {
+    correctAnswer(3);
+};
+btnA.addEventListener("click", choiceA);
+btnB.addEventListener("click", choiceB);
+btnC.addEventListener("click", choiceC);
+btnD.addEventListener("click", choiceD);
+
