@@ -6,4 +6,4 @@ DESCRIPTION:
 
 SCREENCAPTURE:
 
-![Alt Text] (assets/images/Kon's Coding Quiz.gif)
+![Alt Text] (assets/images/Kon's-Coding-Quiz.gif)
