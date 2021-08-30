@@ -23,13 +23,31 @@
             <p><button class="btn" id="btn-c"></button></p>
             <p><button class="btn" id="btn-d"></button></p>
         </div>
-        <input id="score-btn" class="btn" type="button" value="View Scores!">
         <div id="end" class="hide">
-            <p>Great job! Click "View Scores!" at the top to see how you did!</p>
+            <p>Great job! Add your initials below to claim your spot!</p>
+            <form id="user-form" method="POST">
+            <label for="user-text">Player: </label>
+            <input type="text" placeholder="Enter Initials" name="user-text" id="user-text" />
+          </form>
+          <ul id="user-list"></ul>
         </div>
+
+        
+
+        <!-- <form method="POST">
+            <div>
+                <label for="initials">Initials</label>
+                <input type="text" name="initials" id="initials">
+            </div>
+            <div>
+                <button id="sub-ins" class="btn">Submit</button>
+            </div>
+        </form>
         <div class="hide" id="results">
             <p>RESULTS</p>
-        </div>
+            <div id="msg"></div>
+            <p>Players:<ul id="user-list"></ul></p>
+        </div> -->
     </main>
     
 

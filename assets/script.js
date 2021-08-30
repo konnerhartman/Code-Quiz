@@ -1,29 +1,29 @@
-// This is the list of questions that will be asked. Inside is 'ask', which is the question as a string, 'choices', which is the multiple answer choices as an array of strings, and 'answer', which is the correct choice as string that is inside the 'choices' array.
+// This is the list of questions that will be asked. Inside is 'ask', which is the question as a string, 'choices', which is the multiple answer choices as an array of strings, and 'answer', which is the correct choice as an index.
 var questions = [
     {
         ask: "What is the proper name for: '==' ?",
         choices: ["A. Strict Equality", "B. Loose Equality", "C. Abstract Equality", "D. Kinda Equality"],
-        answer: "C. Abstract Equality"
+        answer: 2,
     },
     {
         ask: "What special characters surround an array?",
         choices: ["A. { }", "B. [ ]", "C. ()", "D. ''"],
-        answer: "B. [ ]"
+        answer: 1,
     },
     {
         ask: "In CSS, what does # represent?",
         choices: ["A. id", "B. hashtag", "C. class", "D. value"],
-        answer: "A. id"
+        answer: 0,
     },
     {
         ask: "What is a 'bang' operator?",
         choices: ["A. ||", "B. &&", "C. //", "D. !"],
-        answer: "D. !"
+        answer: 3,
     },
     {
         ask: "What JavaScript command causes a pop-up window on the browser?",
         choices: ["A. alert", "B. prompt", "C. return", "D. NaN"],
-        answer: "B. prompt"
+        answer: 1,
     },
     
 ];
@@ -48,12 +48,18 @@ var endEl = document.getElementById("end");
 // Variable for the 'results' element.
 var resultsEl = document.getElementById("results");
 var index = 0;
-
-// When clicking on the 'start' button, this will start the clock.
-startBtnEl.addEventListener("click", startClock)
+var points = 0;
+// This will allow us to loop through my question array.
+var currentQuestion = questions[index];
+// Starting seconds on the countdown.
+var timeLeft = 120; 
+// User input variables
+var userInput = document.querySelector("#user-text");
+var userForm = document.querySelector("#user-form");
+var userList = document.querySelector("#user-list");
+var users = [];
 
 // Gives the user an initial time of 120 seconds. 
-var timeLeft = 120; 
 function startClock() {
     startBtnEl.classList.add('hide');
     questionBodyEl.classList.remove('hide');
@@ -71,6 +77,24 @@ function startClock() {
     }, 1000);
 };
 
+// This function is supposed to take the choice buttons and convert them into an index array.
+function getIndexFromId(id) {
+    var btnID = ["btnA", "btnB", "btnC", "btnD"];
+    return btnID.indexOf(id);
+}
+// This function is supposed to compare the index from users choice to correct answer.
+function checkAnswer(event) {
+    var userAnswer = getIndexFromId(event.target.id);
+    // If users choice is strictly equal to correct answer, then add a point. 
+    if (userAnswer === currentQuestion.answer) {
+        score++;
+        //If they are not correct, then decrement the time left by 10 seconds.
+    } else {
+        timeLeft -= 10;
+    }
+}
+
+// This function shows the next question but comparing the current question the user is on to the index.
 function showQuestion() {
     var currentQuestion = questions[index];
     if (index < questions.length) {
@@ -80,50 +104,79 @@ function showQuestion() {
         btnC.textContent = currentQuestion.choices[2];
         btnD.textContent = currentQuestion.choices[3];
     };
-
 };
-startBtnEl.addEventListener("click", showQuestion);
 
-function showResults() {
-    resultsEl.classList.remove('hide');
-    endEl.classList.add('hide');
-};
-scoreBtnEl.addEventListener("click", showResults);
-
+// This is called when an answer choice is selected. It calls the 'showQuestion()' function and increments the index, allowing us to move through the array of questions. 
 function nextQuestion() {
     if (index < questions.length) {
         index++;
         showQuestion();
     };
+    // If the index equals the number of questions, then time goes to 0 and ends game.
     if (index === questions.length) {
         timeLeft = 0;
     }
 };
+
+//User Initials
+// This function will render (or show) a list of users who have completed the quiz.
+function renderUsers() {
+    userList.innerHTML = "";
+    // This creates a new list item for each new user.
+    for (var i = 0; i < users.length; i++) {
+        var user = users[i];
+
+        var li =document.createElement("LI");
+        li.textContent = user;
+        li.setAttribute("data-index", i);
+
+        userList.appendChild(li);
+    }
+}
+// This function will ensure the inputs will remain stored when the page is reloaded.
+function init() {
+    var storedUsers = JSON.parse(localStorage.getItem("users"));
+    // If there are inputs retrieved, then the list will be update.
+    if (storedUsers !== null) {
+        users = storedUsers;
+    }
+    renderUsers();
+}
+
+// This function allows localStorage to properly read the data and take it in. Converts it to an array.
+function storeUsers() {
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
+// This prevents the page from reloading everytime an input is submitted.
+userForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var userText = userInput.value.trim();
+    // This if statement prevents any empty submissions. 
+    if (userText === "") {
+        return;
+    }
+    // Adds a new user to list and returns text box back to blank.
+    users.push(userText);
+    userInput.value = "";
+
+    storeUsers();
+    renderUsers();
+});
+
+init();
+
+// Button event listeners for different functions. 
+startBtnEl.addEventListener("click", startClock);
+startBtnEl.addEventListener("click", showQuestion);
+
 btnA.addEventListener("click", nextQuestion);
 btnB.addEventListener("click", nextQuestion);
 btnC.addEventListener("click", nextQuestion);
 btnD.addEventListener("click", nextQuestion);
 
-function correctAnswer() {
-    if (questions[index].answer === questions[index].choices[""]) {
-        timeLeft -= 10;
-    }
-}
-
-function choiceA() {
-    correctAnswer(0);
-};
-function choiceB() {
-    correctAnswer(1);
-};
-function choiceC() {
-    correctAnswer(2);
-};
-function choiceD() {
-    correctAnswer(3);
-};
-btnA.addEventListener("click", choiceA);
-btnB.addEventListener("click", choiceB);
-btnC.addEventListener("click", choiceC);
-btnD.addEventListener("click", choiceD);
-
+btnA.addEventListener("click", checkAnswer);
+btnB.addEventListener("click", checkAnswer);
+btnC.addEventListener("click", checkAnswer);
+btnD.addEventListener("click", checkAnswer);
